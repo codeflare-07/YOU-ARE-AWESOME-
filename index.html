@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>For a Friend Who Means a Lot</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            /* Romantic color palette */
+            --bg-dark: #0b0710;
+            --card-bg: rgba(0, 0, 0, 0.24);
+            --card-border: rgba(255, 182, 193, 0.16); /* soft pink border */
+            --accent: #e76e97;   /* deep rose */
+            --accent2: #ffb6c1;  /* light pink */
+            --text-main: #ffffff;
+            --text-soft: #e7dfe6; /* softer off-white */
+            --max-width: 1000px;
+            --page-padding: 4rem 1.5rem;
+            --shadow-soft: 0 16px 32px rgba(0, 0, 0, 0.45);
+            --transition-fast: 0.25s ease;
+        }
+
+        html,body { height: 100%; }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            /* subtle romantic background: deep night with muted rose glow */
+            background: radial-gradient(circle at top, #2a1430 0, #0b0710 55%, #030204 100%);
+            color: var(--text-main);
+            min-height: 100vh;
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        .bg-wallpaper {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: -3;
+            background-image:
+                radial-gradient(circle at 10% 10%, rgba(231,110,151,0.03), transparent 14%),
+                radial-gradient(circle at 90% 85%, rgba(255,182,193,0.02), transparent 16%);
+            background-repeat: no-repeat;
+            background-size: 420px 420px, 520px 520px;
+            opacity: 0.78;
+            mix-blend-mode: screen;
+        }
+
+        .bg-orb {
+            position: fixed;
+            inset: -40%;
+            background:
+                radial-gradient(circle at 0% 0%, rgba(231,110,151,0.26), transparent 55%),
+                radial-gradient(circle at 100% 100%, rgba(255,182,193,0.18), transparent 55%);
+            filter: blur(12px);
+            opacity: 0.7;
+            z-index: -2;
+            animation: float-bg 14s infinite alternate ease-in-out;
+        }
+
+        @keyframes float-bg {
+            from { transform: translate3d(-20px, 10px, 0); }
+            to   { transform: translate3d(20px, -10px, 0); }
+        }
+
+        .page { min-height: 100vh; display: flex; align-items: center; padding: var(--page-padding); }
+        .content { max-width: var(--max-width); margin: 0 auto; }
+        .center { display: flex; flex-direction: column; align-items: center; text-align: center; }
+        .narrow { max-width: 680px; margin: 0 auto; }
+
+        .split { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1.2fr); gap: 2.5rem; align-items: center; }
+        @media (max-width: 860px) { .split { grid-template-columns: minmax(0, 1fr); } }
+
+        .small-label { letter-spacing: 0.18em; text-transform: uppercase; font-size: 0.72rem; color: rgba(255, 255, 255, 0.75); margin-bottom: 0.6rem; }
+        .main-title { font-size: clamp(2.3rem, 6vw, 3.4rem); font-weight: 800; margin-bottom: 1rem; color: #fff0f6; }
+
+        h2 { font-size: clamp(2rem, 4vw, 2.6rem); margin-bottom: 0.8rem; color: #fff; }
+        h3 { font-size: 1.08rem; margin-bottom: 0.35rem; color: #fff; }
+        p { color: var(--text-soft); line-height: 1.6; margin-bottom: 0.65rem; }
+        .subtitle { margin-bottom: 1.6rem; }
+
+        .primary-btn, .secondary-btn {
+            border-radius: 999px; padding: 0.8rem 1.6rem; border: none; cursor: pointer; font-size: 0.95rem; font-weight: 600;
+            margin-top: 1rem; transition: transform var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast), color var(--transition-fast);
+        }
+        .primary-btn { background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #ffffff; box-shadow: 0 14px 30px rgba(199,47,86,0.24); }
+        .primary-btn:hover { transform: translateY(-2px); box-shadow: 0 18px 38px rgba(199,47,86,0.32); }
+        .primary-btn:active { transform: translateY(0); box-shadow: 0 8px 20px rgba(199,47,86,0.22); }
+        .secondary-btn { background: transparent; border: 1px solid rgba(255, 182, 193, 0.18); color: var(--text-soft); }
+        .secondary-btn:hover { background: rgba(255, 182, 193, 0.04); transform: translateY(-1px); }
+
+        .card { background: var(--card-bg); border-radius: 1.2rem; padding: 1.4rem 1.6rem; border: 1px solid var(--card-border); box-shadow: var(--shadow-soft); backdrop-filter: blur(20px); }
+        .card.glass { background: rgba(10, 8, 18, 0.94); }
+
+        .grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.3rem; }
+        @media (max-width: 980px) { .grid-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+        @media (max-width: 640px) { .grid-3 { grid-template-columns: minmax(0, 1fr); } }
+
+        .timeline { position: relative; margin-top: 1.8rem; padding-left: 1.6rem; }
+        .timeline .line { position: absolute; left: 0.45rem; top: 0.1rem; bottom: 0.1rem; width: 2px; background: linear-gradient(to bottom, var(--accent), transparent); opacity: 0.9; }
+        .timeline-item { position: relative; margin-bottom: 1.7rem; }
+        .timeline-item:last-child { margin-bottom: 0; }
+        .timeline-item .dot { position: absolute; left: -0.02rem; top: 0.5rem; width: 0.7rem; height: 0.7rem; border-radius: 50%; background: var(--accent); box-shadow: 0 0 14px rgba(231,110,151,0.95); }
+        .timeline-card { margin-left: 1.4rem; padding: 1rem 1.2rem; border-radius: 1rem; background: rgba(7, 6, 14, 0.97); border: 1px solid rgba(255, 182, 193, 0.06); }
+
+        .letter p { margin-bottom: 0.9rem; }
+        ul { list-style: disc; margin-left: 1.2rem; color: var(--text-soft); }
+        .mt-2 { margin-top: 2rem; }
+
+        .page-indicator { position: fixed; top: 50%; right: 1.2rem; transform: translateY(-50%); display: flex; flex-direction: column; gap: 0.45rem; z-index: 20; }
+        .page-indicator .dot-btn { width: 10px; height: 10px; border-radius: 999px; border: none; background: rgba(255, 255, 255, 0.25); cursor: pointer; transition: all var(--transition-fast); }
+        .page-indicator .dot-btn.active { background: var(--accent); height: 24px; box-shadow: 0 8px 18px rgba(231,110,151,0.12); }
+        @media (max-width: 640px) { .page-indicator { right: 0.6rem; } }
+
+        .progress-bar { position: fixed; top: 0; left: 0; height: 4px; width: 100%; background: rgba(255, 255, 255, 0.06); z-index: 15; }
+        .progress { height: 100%; width: 0%; background: linear-gradient(90deg, var(--accent), var(--accent2)); transition: width 0.2s ease-out; }
+
+        .typing-line { margin-top: 0.7rem; font-size: 1rem; color: var(--text-soft); white-space: nowrap; overflow: hidden; border-right: 2px solid rgba(255, 182, 193, 0.75); }
+        @media (max-width: 480px) { .typing-line { white-space: normal; border-right: none; } }
+
+        /* heart pulse only on cover (subtle) */
+        .heart {
+            display: inline-block; margin-left: 8px; transform-origin: center; animation: heartPulse 2000ms infinite;
+            color: var(--accent2);
+            opacity: 0.98;
+        }
+        @keyframes heartPulse { 0% { transform: scale(1); } 50% { transform: scale(1.06); } 100% { transform: scale(1); } }
+    </style>
+</head>
+<body>
+    <div class="bg-wallpaper"></div>
+    <div class="bg-orb"></div>
+
+    <!-- Progress bar -->
+    <div class="progress-bar"><div class="progress"></div></div>
+
+    <!-- Side page dots (6 pages) -->
+    <nav class="page-indicator">
+        <button class="dot-btn active" data-target="page-1"></button>
+        <button class="dot-btn" data-target="page-2"></button>
+        <button class="dot-btn" data-target="page-3"></button>
+        <button class="dot-btn" data-target="page-4"></button>
+        <button class="dot-btn" data-target="page-5"></button>
+        <button class="dot-btn" data-target="page-6"></button>
+    </nav>
+
+    <!-- PAGE 1 – Cover -->
+    <section class="page" id="page-1">
+        <div class="content center">
+            <p class="small-label">for a friend</p>
+            <h1 class="main-title">For a Friend Who Means a Lot <span class="heart">❤️</span></h1>
+            <p class="typing-line" id="typing-line">Just a small book for a friend I genuinely appreciate.
+Something honest, simple, and real… the way our bond naturally is. 😊✨. 🙂</p>
+            <button class="primary-btn next-btn" data-next="page-2">Turn the first page ↦</button>
+        </div>
+    </section>
+
+    <!-- PAGE 2 – How it feels -->
+    <section class="page" id="page-2">
+        <div class="content split">
+            <div>
+                <h2>How It Actually Feels</h2>
+                <p>We don’t talk all day on chat. Sometimes a day or two passes and there is no message. But in college, we still see each other almost every day.</p>
+                <p>It’s not about constant texting with you. Even if we talk less on phone, whenever we do talk, it feels real and comfortable — not forced, not fake.</p>
+                <p>The connection is simple and natural. No drama, no overacting, no show-off. Just normal conversations that somehow matter more than they look from outside.</p>
+            </div>
+            <div class="card glass">
+                <h3>Little Moments I Don’t Forget</h3>
+                <ul>
+                    <li>The first proper conversation where everything felt easy to talk about. 🤝</li>
+                    <li>The way you support me without asking for a long explanation every time.</li>
+                    <li>Those random times when you feed me with your hand — quiet care, but very clear. 🍽️
+                        <div style="color:var(--text-soft); margin-top:6px;">And when I’m not studying, you scold me — you push me to do better, and that’s also care. 🫶</div>
+                    </li>
+                    <li>The way I roast you sometimes, and you still handle it like a mature friend. 😄</li>
+                </ul>
+                <button class="secondary-btn next-btn" data-next="page-3">Next page</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- PAGE 3 – Appreciation -->
+    <section class="page" id="page-3">
+        <div class="content">
+            <h2>Things I Honestly Appreciate About You</h2>
+            <p class="subtitle">This is not a dramatic confession. It’s just genuine appreciation for you as a friend and as a person.</p>
+
+            <div class="grid-3">
+                <div class="card">
+                    <h3>Your Support</h3>
+                    <p>You support in a very real way. Sometimes you listen, sometimes you give advice, sometimes you distract me, and sometimes you literally feed me when I don’t feel like eating. It looks simple, but it means a lot. 💛</p>
+                </div>
+
+                <div class="card">
+                    <h3>Your Presence</h3>
+                    <p>Even on days when we don’t chat much, just knowing I will see you in college or that I can talk to you if I really need to already makes things feel lighter. 😊</p>
+                </div>
+
+                <div class="card">
+                    <h3>Your Reaction to My Roasting</h3>
+                    <p>I joke around and roast you sometimes. You handle it with balance — no drama, no grudges. That mix of fun and maturity is actually rare. 😄</p>
+                </div>
+
+                <div class="card">
+                    <h3>Your Way of Caring</h3>
+                    <p>You don’t always say “I care,” but your actions say it louder than words. The way you catch small details, check on me without making it a big deal, and silently make sure I’m okay — it’s subtle, steady, and feels genuine. ❤️‍🩹🙂</p>
+                </div>
+
+                <div class="card">
+                    <h3>Your Realness</h3>
+                    <p>You’re genuinely yourself — serious at times, funny at others, strict when needed, and unexpectedly soft too. That combination is what makes you a one-of-a-kind friend. 🌟</p>
+                </div>
+            </div>
+
+            <div class="center mt-2">
+                <button class="primary-btn next-btn" data-next="page-4">Flip to the next page</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- PAGE 4 – Moments / chapters -->
+    <section class="page" id="page-4">
+        <div class="content">
+            <h2>Some Moments I’d Revisit Any Time</h2>
+
+            <div class="timeline">
+                <div class="line"></div>
+
+                <div class="timeline-item">
+                    <div class="dot"></div>
+                    <div class="timeline-card">
+                        <h3>Chapter 1 — That First Real Talk</h3>
+                        <p>The first time we actually talked properly — just a normal conversation. That ease was rare and it mattered. 🗣️</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="dot"></div>
+                    <div class="timeline-card">
+                        <h3>Chapter 2 — Jokes and Roasting</h3>
+                        <p>Those silly exchanges — the roasting, the quick comebacks — are exactly what make our friendship feel alive and genuinely fun. ⚡😄</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="dot"></div>
+                    <div class="timeline-card">
+                        <h3>Chapter 3 — When You Quietly Took Care</h3>
+                        <p>When I was low, you checked on me or fed me by hand — small actions that showed real care. 🫶</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="dot"></div>
+                    <div class="timeline-card">
+                        <h3>Chapter 4 — Simply Being Around</h3>
+                        <p>Seeing you in college almost every day — even without long conversations — builds a comfort I truly value. It feels steady, familiar, and real. 🧭🙂</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="center mt-2">
+                <button class="primary-btn next-btn" data-next="page-5">Next — Memories</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- PAGE 5 – Memories We Haven’t Made Yet -->
+    <section class="page" id="page-5">
+        <div class="content center narrow">
+            <h2>Memories We Haven’t Made Yet</h2>
+
+            <div class="card glass letter" style="margin-top:18px; text-align:left;">
+                <h3>Chapter 5 — Memories I Want To Make</h3>
+                <p>There are a few simple things I’d love to do with you:</p>
+                <ul>
+                    <li>🎬🍿 I just want moments like watching a movie with you — a lazy afternoon, some snacks, and our usual stupid commentary.</li>
+                    <li>🚗🌇 Maybe a small trip or a quiet place sometime — like a lake or anywhere simple, where we spend time our own way, take a few photos, eat something, and come back with a small memory.</li>
+                    <li>☕📸 And sometimes just sitting somewhere, talking, laughing, with no rush and no pressure — just real, simple time together.</li>
+                </ul>
+                <p style="margin-top:8px; color:var(--text-soft);">No pressure, no labels — just a calm wish to create a few easy memories together.</p>
+            </div>
+
+            <div class="center mt-2">
+                <button class="primary-btn next-btn" data-next="page-6">Last page ↦</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- PAGE 6 – Thank-you page -->
+    <section class="page" id="page-6">
+        <div class="content center narrow">
+            <h2>A Small Thank-You Page</h2>
+
+            <div class="card glass letter" style="margin-top:18px;">
+                
+<p>You’ve become an important part of my daily life in a very real way.</p>
+<p>Not because we talk all the time, but because whenever we do talk, it genuinely impacts my day. ✨</p>
+
+<p>I appreciate your support, your patience with my roasting 😄, your quiet care, and all the small things you do without even realizing it.</p>
+
+<p>No pressure, no expectations, no labels — just genuine respect and gratitude. 🙏</p>
+<p>Whatever direction life takes, one thing stays the same: you’re an important friend to me. 🤝</p>
+               
+        </div>
+    </section>
+
+    <script>
+        const pages = Array.from(document.querySelectorAll(".page"));
+        const dots = Array.from(document.querySelectorAll(".dot-btn"));
+        const progressBar = document.querySelector(".progress");
+        const nextButtons = document.querySelectorAll(".next-btn");
+
+        function scrollToPage(id) {
+            const section = document.getElementById(id);
+            if (!section) return;
+            section.scrollIntoView({ behavior: "smooth" });
+
+            const index = pages.findIndex(p => p.id === id);
+            dots.forEach((d, i) => d.classList.toggle("active", i === index));
+            const percent = ((index + 1) / pages.length) * 100;
+            progressBar.style.width = percent + "%";
+        }
+
+        dots.forEach(dot => {
+            dot.addEventListener("click", () => {
+                const target = dot.dataset.target;
+                scrollToPage(target);
+            });
+        });
+
+        nextButtons.forEach(btn => {
+            btn.addEventListener("click", () => {
+                const nextId = btn.dataset.next;
+                scrollToPage(nextId);
+            });
+        });
+
+        function updateOnScroll() {
+            let activeId = pages[0].id;
+            pages.forEach(section => {
+                const rect = section.getBoundingClientRect();
+                const center = window.innerHeight * 0.45;
+                if (rect.top <= center && rect.bottom >= center) { activeId = section.id; }
+            });
+            const index = pages.findIndex(p => p.id === activeId);
+            dots.forEach((d, i) => d.classList.toggle("active", i === index));
+            const percent = ((index + 1) / pages.length) * 100;
+            progressBar.style.width = percent + "%";
+        }
+
+        window.addEventListener("scroll", updateOnScroll);
+
+        // set initial progress & active dot without scrolling
+        (function init() {
+            updateOnScroll();
+            // ensure cover typing effect still runs
+            const typingEl = document.getElementById("typing-line");
+            if (typingEl) {
+                const fullText = typingEl.textContent.trim();
+                typingEl.textContent = "";
+                let i = 0;
+                function type() {
+                    if (i <= fullText.length) {
+                        typingEl.textContent = fullText.slice(0, i);
+                        i++;
+                        setTimeout(type, 45);
+                    }
+                }
+                setTimeout(type, 560);
+            }
+        })();
+    </script>
+</body>
+</html>
